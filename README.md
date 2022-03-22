@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# DormIt first prototype
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+DormIt is an app that provides delivery for student. This is the first prototype for the DormIt app.
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+In this app, we shall use React, TypeScript and Firebase for the development. Firebase will be used for authentication and storage due to how simple it is to set up and working. We will handle routing use react-router. For styling, need further discussion as we don't know how familiar people are with CSS framework. These are the main technologies used for this app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project structure
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The app has four(4) main pages:
 
-### `npm test`
+- `/browse` is the route that show all products, handle products selection
+- `/search` is the route that handles search and display searched items
+- `/cart` is the route that handles remove items, increase items amount, payment
+- `/account` is the route that handle user data
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For this project, I shall organize the component based on which route they are used on. For example, the `Item` component should be on the `browse` directory as we use `Item` in `browse` route. This decision is made based on the fact that there are little to no common functionalities between routes. I also have the `shared` directory for any components that are shared between different routes, and `helper` for any helper function and hooks. Additionally, for this app I will use ContextAPI to handle state management
 
-### `npm run build`
+```bash
+/src
+|
+|-- context
+|-- helpers
+|-- shared
+|-- routes
+    |-- account
+    |-- browse
+    |-- cart
+    |-- search
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For the moment, I shall ignore the need for testing
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Database structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Because Firestore(which is the name for the storage Firebase used) is a Non-SQL database, the structure is different from normal SQL database. In a sense, it is more similar to a JSON structure. In firestore, we have collections, and in each collection we have multiple elements in it, each have its own ID
 
-### `npm run eject`
+For this app, from the description so far, in my opinion, it should have two(2) collections: `product` and `user`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `product` should hold the details about a product like its id, price, description, etc.
+- `user` should hold detail about the user AND all items user has selected
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The detail for each element of the type can be found on [types.ts](types.ts)
